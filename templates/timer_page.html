@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Scheduler</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background:url("https://i.pinimg.com/564x/c8/6b/2b/c86b2b4c67f0c1432e3aa0a6eaf0cdda.jpg") center/cover no-repeat;
+            color: #333;
+            margin: 1;
+            padding: 20px;
+            text-align: center;
+            height: 92vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #000000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgb(0, 0, 0);
+        }
+
+        #timer {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #000000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgb(0, 0, 0);
+            width: 50%; 
+        }
+    </style>
+</head>
+<body>
+    <h1>AUTO SCHEDULER</h1>
+    <div id="timer"></div>
+
+    <script>
+        function updateTimer() {
+            
+            var urlParams = new URLSearchParams(window.location.search);
+            var scheduledTime = new Date(urlParams.get("datetime"));
+
+            
+            var currentTime = new Date();
+
+            
+            var timeDifference = (scheduledTime - currentTime) / 1000;
+
+            //timer display
+            var timerElement = document.getElementById("timer");
+            var hours = Math.floor(timeDifference / 3600);
+            var minutes = Math.floor((timeDifference % 3600) / 60);
+            var seconds = Math.floor(timeDifference % 60);
+
+            if (timeDifference > 0) {
+                timerElement.innerHTML = "The post will be Scheduled in : " + hours + " h " + minutes + " m " + seconds + " s";
+            } else {
+                
+                timerElement.style.display = "none";
+                timerElement.innerHTML = " Being Processed... ";
+            }
+
+            // Update the timer every second
+            setTimeout(updateTimer, 1000);
+        }
+
+        // Call the updateTimer function initially
+        updateTimer();
+    </script>
+</body>
+</html>

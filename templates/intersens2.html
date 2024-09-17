@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Instagram Post</title>
+    <style>
+       body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url("https://i.pinimg.com/564x/c8/6b/2b/c86b2b4c67f0c1432e3aa0a6eaf0cdda.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #2498e6;
+            margin: 1;
+            padding: 40px;
+            }
+
+        h1,
+        #teja,
+        form {
+            position: relative;
+            z-index: 0;
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #000000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgb(0, 0, 0);
+        }
+
+        h1 {
+            font-family: fantasy;
+            color: rgb(0, 0, 0);
+        }
+
+        body #gt {
+            align-items: center;
+            color: #ffffff;
+            font-family: 'Lato', sans-serif;
+        }
+
+        form {
+            background-color: #11121b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(0, 0, 0);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        #fileLabel {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        #photoPreview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #27ae60;
+        }
+    </style>
+    <script>
+        function previewPhoto() {
+            var input = document.getElementById('fileInput');
+            var preview = document.getElementById('photoPreview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1 align="center" id="gt">Auto Scheduler</h1>
+    <form action="/schedule" method="POST" enctype="multipart/form-data">
+        <label for="username">Instagram Username:</label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="password">Instagram Password:</label>
+        <input type="password" name="password" id="password" required>
+
+        <label for="photo">Upload Photo or Video:</label>
+        <label id="fileLabel" for="fileInput">Choose File</label>
+        <input type="file" id="fileInput" name="photo" accept="image/*, video/*" required onchange="previewPhoto()">
+        <img id="photoPreview" src="" alt="Preview">
+
+        <label for="caption">Caption:</label>
+        <textarea name="caption" id="caption" rows="4" required></textarea>
+
+        <label for="datetime">Date and Time for the Post:</label>
+        <input type="datetime-local" name="datetime" id="datetime" required>
+
+        <input type="submit" value="Schedule Post">
+    </form>
+
+    <script>
+        function schedulePost(event) {
+            event.preventDefault();
+
+            // Get the scheduled time from the input field
+            var scheduledTime = new Date(document.getElementById("datetime").value);
+
+            // Redirect to the timer page with the scheduled time as a query parameter
+            window.location.href = "/timer-page?datetime=" + encodeURIComponent(scheduledTime.toISOString());
+        }
+    </script>
+</body>
+
+</html>
